@@ -8,11 +8,11 @@ namespace Desafio_GIS
 {
     internal class Menu
     {
-        private readonly Parking _estacionamento;
+        private readonly Parking _parking;
 
         public Menu() 
         {
-            _estacionamento = new Parking();
+            _parking = new Parking();
         }
 
         public static string Start()
@@ -31,7 +31,7 @@ namespace Desafio_GIS
 
             string plate = Reader.Plate();
 
-            if (_estacionamento.CheckPlate(plate))
+            if (_parking.CheckPlate(plate))
             {
                 Color.Write("Ops! Este veículo já está estacionado. Tente uma placa diferente, por favor.", MessageType.Warn);
                 return;
@@ -51,11 +51,11 @@ namespace Desafio_GIS
             switch (type)
             {
                 case "1":
-                    _estacionamento.Park(new Car(plate, model, brand, 0));
+                    _parking.Park(new Car(plate, model, brand, 0));
                     Color.Write("Carro estacionado com sucesso!", MessageType.Success);
                     break;
                 case "2":
-                    _estacionamento.Park(new Bike(plate, model, brand, 0));
+                    _parking.Park(new Bike(plate, model, brand, 0));
                     Color.Write("Moto estacionada com sucesso!", MessageType.Success);
                     break;
                 default:
@@ -70,7 +70,7 @@ namespace Desafio_GIS
 
             Color.Write("._____________DESESTACIONAR_____________.", MessageType.Info);
 
-            if (_estacionamento._vehicles.Count == 0)
+            if (_parking._vehicles.Count == 0)
             {
                 Color.Write("\nParece que está vazio por aqui...\n", MessageType.Info);
                 return;
@@ -78,9 +78,9 @@ namespace Desafio_GIS
 
             Color.Write(".___________PLACAS___________.", MessageType.Info);
 
-            for (int i = 0; i < _estacionamento._vehicles.Count; i++)
+            for (int i = 0; i < _parking._vehicles.Count; i++)
             {
-                Color.Write($"[{i + 1}] {_estacionamento._vehicles[i].Plate}", MessageType.Success);
+                Color.Write($"[{i + 1}] {_parking._vehicles[i].Plate}", MessageType.Success);
             }
 
             string plate = Reader.Plate();
@@ -88,8 +88,8 @@ namespace Desafio_GIS
 
             try
             {
-                _estacionamento.CalcFee(plate, hours);
-                _estacionamento.Unpark(plate);
+                _parking.CalcFee(plate, hours);
+                _parking.Unpark(plate);
                 Color.Write("Veículo retirado com sucesso. Foi um prazer atendê-lo!", MessageType.Success);
             }
             catch (Exception e)
@@ -103,13 +103,13 @@ namespace Desafio_GIS
             Console.Clear();
             Color.Write("._________VEÍCULOS ESTACIONADOS_________.", MessageType.Info);
 
-            if (_estacionamento._vehicles.Count == 0)
+            if (_parking._vehicles.Count == 0)
             {
                 Color.Write("\nNenhum veículo estacionado no momento. O estacionamento está todo seu!\n", MessageType.Info);
                 return;
             }
 
-            foreach (var vehicle in _estacionamento._vehicles)
+            foreach (var vehicle in _parking._vehicles)
             {
                 vehicle.ShowInfo();
             }
